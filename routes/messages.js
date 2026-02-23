@@ -7,7 +7,7 @@ router.post("/", async(req, res)=>{
     try{
         const {user_id, name, message} = req.body
 
-        const {error:msgError} = await db.from("six_messages")
+        const {error:msgError} = await db.from("chat_msg")
         .insert({
             user_id,
             name,
@@ -22,7 +22,7 @@ router.post("/", async(req, res)=>{
 
 router.get("/", async(req, res)=>{
     try{
-        const {data, error:msgError} = await db.from("six_messages")
+        const {data, error:msgError} = await db.from("chat_msg")
         .select("*")
         .order('created_at', {ascending:true})
 
@@ -37,7 +37,7 @@ router.put("/:id", async(req, res)=>{
     try{
         const {id} = req.params;
         const {newMessage} = req.body;
-       const {data, error} = await db.from("six_messages")
+       const {data, error} = await db.from("chat_msg")
         .update({message:newMessage})
         .eq("id", id)
 
@@ -52,7 +52,7 @@ router.post("/reply/:id", async(req, res)=>{
     try{
         const {id} = req.params;
         const {user_id, name, reply_old_msg, replyMessage} = req.body;
-       const {data, error} = await db.from("six_messages")
+       const {data, error} = await db.from("chat_msg")
         .insert({
             user_id,
             name,
@@ -74,7 +74,7 @@ router.post("/reply/:id", async(req, res)=>{
 router.delete("/:id", async(req, res)=>{
     try{
         const {id} = req.params;
-       const {data, error} = await db.from("six_messages")
+       const {data, error} = await db.from("chat_msg")
         .delete()
         .eq("id", id)
 
